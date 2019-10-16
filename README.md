@@ -40,8 +40,8 @@ Control Surface Script for Bitwig Studio - Developed by Artur Brahms
 
 ## History
 - v0.5.0 / 11.Oct.2019 => Initial Release
-- v0.5.1 / 14.Oct.2019 => Public Beta
-- v0.5.2 / 15.Oct.2019 => Bugfixes
+- v0.5.1 / 14.Oct.2019 => Internal Beta
+- v0.5.2 / 15.Oct.2019 => Public Beta-1
 
 
 
