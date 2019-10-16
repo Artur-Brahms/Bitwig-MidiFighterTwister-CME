@@ -1,5 +1,5 @@
 # Midi Fighter Twister - Custom-Mapping-Edition 
-Control Surface Script for Bitwig Studio - Developed by Artur Brahms | 2019
+Control Surface Script for Bitwig Studio - Developed by Artur Brahms
 
 ## Simplified Control for DJ-TechTools Midi Fighter Twister
 
