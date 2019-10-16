@@ -39,9 +39,21 @@ Control Surface Script for Bitwig Studio - Developed by Artur Brahms
 
 
 ## History
-- v0.5.0 / 11.Oct.2019 => Initial Release
-- v0.5.1 / 14.Oct.2019 => Internal Beta
-- v0.5.2 / 15.Oct.2019 => Public Beta-1
+- 0.5.0 / 11.Oct.2019 => Initial Release
+	- a very basic working idea
+###
+- 0.5.1 / 14.Oct.2019 => Internal Beta
+	- a perfect working idea
+###
+- 0.5.2 / 15.Oct.2019 => Public Beta-1
+	- code rebase and cleanup
+	- fix documentation
+	- github-support (info/download/wiki)
+###
+- 0.5.3 / 16.Oct.2019 => Public Beta-2
+	- added support for "side-button press" (unused yet)
+	- implemented current-page detection (unused yet)
+###
 
 
 
