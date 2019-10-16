@@ -14,7 +14,7 @@ var SCRIPT_MANUFACTURER = "DJ TechTools";
 var SCRIPT_AUTHOR = "Artur Brahms";
 var SCRIPT_UID = "dee03aad-c932-48f1-9aee-22b682856f26";
 
-// MidiFighter Twister - Support up to 4 Devices/Pages a 16 Parameters
+// Midi Fighter Twister - Support up to 4 Devices/Pages a 16 Parameters
 var CC_LO = 1;
 var CC_HI = 128;
 
@@ -68,9 +68,10 @@ function init ()
 	{
 	// Initialize Transport/MIDI
 	transport = host.createTransport ();
-	midiInputPort0 = host.getMidiInPort (0)
+	midiInputPort0 = host.getMidiInPort (0);
 	midiInputPort0.setMidiCallback (onMidi);
 
+	// Console
 	println (SCRIPT_NAME + " initialized" + " (Version: " + SCRIPT_VERSION + " / Host-API: " + host.getHostApiVersion () + " / Platform: " + host.getPlatformType () + ")");
 
 	// Show Init-Popup
@@ -104,8 +105,8 @@ function onMidi (status, data1, data2)
 	// CC-Messages
 	if (isChannelController (status))
 		{
-		// Console - MIDI-IN-CC
-		println ("MIDI-IN-CC :" + data1 + " > " + data2);
+		// Console - MIDI-In-CC
+		println ("MIDI-In-CC :" + data1 + " > " + data2);
 
 		// Check supported CC-Range
 		if (data1 >= CC_LO && data1 <= CC_HI)
@@ -128,13 +129,13 @@ function buildControlObserverFunction (ccNumber, controlHolder)
 		// Store
 		controlHolder[ccNumber] = ccValue;
 
-		// Build MidiFighter-Value (100>127)
-		ccValueMF = (ccValue * 127)
+		// Build Midi Fighter Twister-Value (100 > 127)
+		ccValueMFT = (ccValue * 127);
 
 		// Send MIDI-CC to Device
-		sendMidi (176, (ccNumber+1), ccValueMF)
+		sendMidi (176, (ccNumber+1), ccValueMFT);
 
-		// Console
-		println ("MIDI-CC-OUT: " + (ccNumber+1) + " > " + Math.round (ccValueMF, 2));
+		// Console - MIDI-Out-CC
+		println ("MIDI-CC-Out: " + (ccNumber+1) + " > " + Math.round (ccValueMFT, 2));
 		}
 	}
