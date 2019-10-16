@@ -6,7 +6,7 @@ Control Surface Script for Bitwig Studio - 2019 by Artur Brahms
 - User controls freely mappable via right mouse-click "Learn Controller Assignment..."
 - Visual Feedback on Twister´s Knob-LEDs after Mapping
 - Bidirectional control of the assigned parameters
-- all 128 CC-parameters supported
+- all 128 CC-parameters mappable
 - multiple Twister-Devices supported
 
 
