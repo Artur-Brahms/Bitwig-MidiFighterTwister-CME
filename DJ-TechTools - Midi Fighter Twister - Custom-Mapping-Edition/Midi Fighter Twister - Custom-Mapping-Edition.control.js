@@ -9,7 +9,7 @@
 // - BASIC SCRIPT-CONFIG
 // ---------------------------------------------------------------------------------------------------------------------
 var SCRIPT_NAME = "Midi Fighter Twister - Custom-Mapping-Edition";
-var SCRIPT_VERSION = "0.5.2";
+var SCRIPT_VERSION = "0.5.3";
 var SCRIPT_MANUFACTURER = "DJ TechTools";
 var SCRIPT_AUTHOR = "Artur Brahms";
 var SCRIPT_UID = "dee03aad-c932-48f1-9aee-22b682856f26";
@@ -108,8 +108,25 @@ function onMidi (status, data1, data2)
 		// Console - MIDI-In-CC
 		println ("MIDI-In-CC :" + data1 + " > " + data2);
 
+		// Check Side-Button-Press
+		if (status == "179")
+			{
+			// Build Side-Buttons Details
+			if ((data1 == "1" && data2 == "0") || (data1 == "1" && data2 == "127") || (data1 == "2" && data2 == "127") || (data1 == "2" && data2 == "0") || (data1 == "3" && data2 == "127"))
+				{
+				let page = 0;
+				if (data1 == "1" && data2 == "0") { page = 1; }
+				if (data1 == "1" && data2 == "127") { page = 2; }
+				if (data1 == "2" && data2 == "127") { page = 3; }
+				if (data1 == "3" && data2 == "127") { page = 4; }
+				
+				// Console - MIDI-In-Side-Next/Previous
+				println ("MIDI-In-Side-Next/Previous (Status: " + status + "): " + data1 + " > " + data2 + " [Page: " + page + "]");
+				}
+			}
+
 		// Check supported CC-Range
-		if (data1 >= CC_LO && data1 <= CC_HI)
+		else if (data1 >= CC_LO && data1 <= CC_HI)
 			{
 			// Set Control
 			userControls.getControl ((data1-1)).value().set (data2, 128);
