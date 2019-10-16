@@ -1,7 +1,7 @@
 // =====================================================================================================================
 // = Midi Fighter Twister (Dj-TechTools) - Controller-Script for Bitwig
 // ---------------------------------------------------------------------------------------------------------------------
-// = Custom-Mapping-Edition - Developed by Artur Brahms | Oct-2019
+// = Custom-Mapping-Edition - Developed by Artur Brahms | 2019
 // = Simplified Control for DJ-TechTools Midi Fighter Twister
 // =====================================================================================================================
 
@@ -12,7 +12,7 @@ var SCRIPT_NAME = "Midi Fighter Twister - Custom-Mapping-Edition";
 var SCRIPT_VERSION = "0.5.2";
 var SCRIPT_MANUFACTURER = "DJ TechTools";
 var SCRIPT_AUTHOR = "Artur Brahms";
-var SCRIPT_UID = "d1sc0affei4ee-abde-48f1-9aee-22b682856f26";
+var SCRIPT_UID = "dee03aad-c932-48f1-9aee-22b682856f26";
 
 // Midi Fighter Twister - Support up to 4 Devices / Pages a 16 Parameters
 var CC_LO = 1;
