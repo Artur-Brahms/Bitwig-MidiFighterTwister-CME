@@ -150,9 +150,9 @@ function buildControlObserverFunction (ccNumber, controlHolder)
 		ccValueMFT = (ccValue * 127);
 
 		// Send MIDI-CC to Device
-		sendMidi (176, (ccNumber+1), ccValueMFT);
+		sendMidi (176, (ccNumber), ccValueMFT);
 
 		// Console - MIDI-Out-CC
-		println ("MIDI-CC-Out: " + (ccNumber+1) + " > " + Math.round (ccValueMFT, 2));
+		println ("MIDI-CC-Out: " + (ccNumber) + " > " + Math.round (ccValueMFT, 2));
 		}
 	}
