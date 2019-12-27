@@ -54,6 +54,9 @@ Control Surface Script for Bitwig Studio - Developed by Artur Brahms
 	- added support for "side-button press" (unused yet)
 	- implemented current-page detection (unused yet)
 ###
+- 0.5.4 / 27.Dec.2019 => Public Beta-3
+	- fixed: cc0 not assignable
+###
 
 
 
