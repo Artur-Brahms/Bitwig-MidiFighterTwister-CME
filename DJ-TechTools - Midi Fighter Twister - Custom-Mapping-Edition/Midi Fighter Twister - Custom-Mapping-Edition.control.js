@@ -9,14 +9,14 @@
 // - BASIC SCRIPT-CONFIG
 // ---------------------------------------------------------------------------------------------------------------------
 var SCRIPT_NAME = "Midi Fighter Twister - Custom-Mapping-Edition";
-var SCRIPT_VERSION = "0.5.3";
+var SCRIPT_VERSION = "0.5.4";
 var SCRIPT_MANUFACTURER = "DJ TechTools";
 var SCRIPT_AUTHOR = "Artur Brahms";
 var SCRIPT_UID = "dee03aad-c932-48f1-9aee-22b682856f26";
 
 // Midi Fighter Twister - Support up to 4 Devices / Pages a 16 Parameters
-var CC_LO = 1;
-var CC_HI = 128;
+var CC_LO = 0;
+var CC_HI = 127;
 
 
 
@@ -78,13 +78,13 @@ function init ()
 	host.showPopupNotification (SCRIPT_NAME + " initialized!");
 
 	// Create UserControls
-	var controlHolder = initArray (0, 128);
+	var controlHolder = initArray (0, 127);
 	userControls = host.createUserControls (CC_HI - CC_LO + 1);
-	for (var ccNumber = (CC_LO-1); ccNumber <= (CC_HI-1); ccNumber++)
+	for (var ccNumber = (CC_LO); ccNumber <= (CC_HI); ccNumber++)
 		{
 		// Get Control
 		var control = userControls.getControl (ccNumber);
-		control.setLabel ("CC" + (ccNumber+1));
+		control.setLabel ("CC" + (ccNumber));
 		control.markInterested ();
 
 		// Add Observer
@@ -129,7 +129,7 @@ function onMidi (status, data1, data2)
 		else if (data1 >= CC_LO && data1 <= CC_HI)
 			{
 			// Set Control
-			userControls.getControl ((data1-1)).value().set (data2, 128);
+			userControls.getControl ((data1)).value().set (data2, 128);
 			}
 		}
 	}
