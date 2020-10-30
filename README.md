@@ -57,12 +57,15 @@ Control Surface Script for Bitwig Studio - Developed by Artur Brahms
 - 0.5.4 / 27.Dec.2019 => Public Beta-3
 	- fixed: cc0 not assignable
 ###
+- 0.5.5 / 30.Oct.2020 => Release
+	- changes to support Bitwig v3.3
+###
 
 
 
 ## Licensing
 
-Copyright (c) 2019 by Artur Brahms
+Copyright (c) 2019-2020 by Artur Brahms
  
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
