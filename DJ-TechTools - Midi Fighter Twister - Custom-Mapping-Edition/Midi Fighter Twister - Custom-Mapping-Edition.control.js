@@ -1,7 +1,7 @@
 // =====================================================================================================================
 // = Midi Fighter Twister (Dj-TechTools) - Controller-Script for Bitwig
 // ---------------------------------------------------------------------------------------------------------------------
-// = Custom-Mapping-Edition - Developed by Artur Brahms | 2019
+// = Custom-Mapping-Edition - Developed by Artur Brahms | 2019-2020
 // = Simplified Control for DJ-TechTools Midi Fighter Twister
 // =====================================================================================================================
 
@@ -9,7 +9,7 @@
 // - BASIC SCRIPT-CONFIG
 // ---------------------------------------------------------------------------------------------------------------------
 var SCRIPT_NAME = "Midi Fighter Twister - Custom-Mapping-Edition";
-var SCRIPT_VERSION = "0.5.4";
+var SCRIPT_VERSION = "0.5.5";
 var SCRIPT_MANUFACTURER = "DJ TechTools";
 var SCRIPT_AUTHOR = "Artur Brahms";
 var SCRIPT_UID = "dee03aad-c932-48f1-9aee-22b682856f26";
@@ -150,7 +150,7 @@ function buildControlObserverFunction (ccNumber, controlHolder)
 		ccValueMFT = (ccValue * 127);
 
 		// Send MIDI-CC to Device
-		sendMidi (176, (ccNumber), ccValueMFT);
+		sendMidi (176, (ccNumber), Math.round (ccValueMFT));
 
 		// Console - MIDI-Out-CC
 		println ("MIDI-CC-Out: " + (ccNumber) + " > " + Math.round (ccValueMFT, 2));
