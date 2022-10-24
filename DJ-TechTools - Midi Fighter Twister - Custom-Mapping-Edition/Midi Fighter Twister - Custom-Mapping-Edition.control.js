@@ -1,7 +1,7 @@
 // =====================================================================================================================
 // = Midi Fighter Twister (Dj-TechTools) - Controller-Script for Bitwig
 // ---------------------------------------------------------------------------------------------------------------------
-// = Custom-Mapping-Edition - Developed by Artur Brahms | 2019-2020
+// = Custom-Mapping-Edition - Developed by Artur Brahms | 2019-2022
 // = Simplified Control for DJ-TechTools Midi Fighter Twister
 // =====================================================================================================================
 
@@ -9,14 +9,10 @@
 // - BASIC SCRIPT-CONFIG
 // ---------------------------------------------------------------------------------------------------------------------
 var SCRIPT_NAME = "Midi Fighter Twister - Custom-Mapping-Edition";
-var SCRIPT_VERSION = "0.5.5";
+var SCRIPT_VERSION = "0.6.0";
 var SCRIPT_MANUFACTURER = "DJ TechTools";
 var SCRIPT_AUTHOR = "Artur Brahms";
 var SCRIPT_UID = "dee03aad-c932-48f1-9aee-22b682856f26";
-
-// Midi Fighter Twister - Support up to 4 Devices / Pages a 16 Parameters
-var CC_LO = 0;
-var CC_HI = 127;
 
 
 
@@ -78,17 +74,28 @@ function init ()
 	host.showPopupNotification (SCRIPT_NAME + " initialized!");
 
 	// Create UserControls
-	var controlHolder = initArray (0, 127);
-	userControls = host.createUserControls (CC_HI - CC_LO + 1);
-	for (var ccNumber = (CC_LO); ccNumber <= (CC_HI); ccNumber++)
-		{
-		// Get Control
-		var control = userControls.getControl (ccNumber);
-		control.setLabel ("CC" + (ccNumber));
-		control.markInterested ();
+	var controlHolder = initArray (0, 128 * 16);
+	userControls = host.createUserControls (128 * 16);
 
-		// Add Observer
-		control.value ().addValueObserver (buildControlObserverFunction (ccNumber, controlHolder));
+	// Cycle through all Channels
+	for (var chanNumber = 0; chanNumber <= 15; chanNumber++)
+		{
+		for (var ccNumber = 0; ccNumber <= 127; ccNumber++)
+			{
+			// Build Control-ID
+			var controlId = ((chanNumber * 128) + ccNumber);
+
+			// Debug
+			//println ("[" + controlId + "]" + chanNumber + "|" + ccNumber + " | Chan-Calc: " + getChannelFromControlIdentifier(controlId) + " | CC-Calc: " + getCCFromControlIdentifier (controlId));
+
+			// Create Control
+			var control = userControls.getControl (controlId);
+			control.setLabel ("CC" + ccNumber + " (Ch. " + (chanNumber + 1) + ")");
+			control.markInterested ();
+
+			// Add Observer
+			control.value ().addValueObserver (buildControlObserverFunction (chanNumber, ccNumber, controlHolder));
+			}
 		}
 	}
 
@@ -100,13 +107,13 @@ function init ()
 function onMidi (status, data1, data2)
 	{
 	// Console - Print MIDI
-	// println ("MIDI-In: "); printMidi (status, data1, data2);
+	//println ("MIDI-In: "); printMidi (status, data1, data2);
 
 	// CC-Messages
 	if (isChannelController (status))
 		{
 		// Console - MIDI-In-CC
-		println ("MIDI-In-CC :" + data1 + " > " + data2);
+		println ("[" + (MIDIChannel(status) + 1) + "] MIDI-In-CC:" + data1 + " > " + data2);
 
 		// Check Side-Button-Press
 		if (status == "179")
@@ -125,11 +132,17 @@ function onMidi (status, data1, data2)
 				}
 			}
 
-		// Check supported CC-Range
-		else if (data1 >= CC_LO && data1 <= CC_HI)
+		// Check supported CC-Range (CH01)
+		else if ((MIDIChannel(status) == 0 || MIDIChannel(status) == 4) && data1 >= 0 && data1 <= 127)
 			{
+			// Calc Control-ID
+			controlId = (MIDIChannel(status)) * 128 + (data1);
+			
+			// Debug
+			//println ("ControlIdentifier: " + controlId + " | Chan: " + getChannelFromControlIdentifier (controlId) + " | CC: " + getCCFromControlIdentifier (controlId) );
+
 			// Set Control
-			userControls.getControl ((data1)).value().set (data2, 128);
+			userControls.getControl ((controlId)).value().set (data2, 128);
 			}
 		}
 	}
@@ -137,22 +150,45 @@ function onMidi (status, data1, data2)
 
 
 // ---------------------------------------------------------------------------------------------------------------------
-// - CONTROL-OBSERVER (FUNCTION)
+// - CONTROL-OBSERVER (CALLBACK)
 // ---------------------------------------------------------------------------------------------------------------------
-function buildControlObserverFunction (ccNumber, controlHolder)
+function buildControlObserverFunction (channel, ccNumber, controlHolderMain)
 	{
 	return function (ccValue)
 		{
 		// Store
-		controlHolder[ccNumber] = ccValue;
+		controlHolderMain[ccNumber] = ccValue;
 
 		// Build Midi Fighter Twister-Value (100 > 127)
 		ccValueMFT = (ccValue * 127);
 
-		// Send MIDI-CC to Device
-		sendMidi (176, (ccNumber), Math.round (ccValueMFT));
+		// Send MIDI-CC to Device (CH1)
+		//sendMidi (176, (ccNumber), Math.round (ccValueMFT));
+		sendChannelController (channel, ccNumber, Math.round (ccValueMFT));
 
 		// Console - MIDI-Out-CC
-		println ("MIDI-CC-Out: " + (ccNumber) + " > " + Math.round (ccValueMFT, 2));
+		println ("["+ (channel + 1) +"] MIDI-Out-CC: " + (ccNumber) + " > " + Math.round (ccValueMFT, 2));
 		}
+	}
+
+
+
+// ---------------------------------------------------------------------------------------------------------------------
+// - getChannelFromControlIdentifier
+// - Get the MIDI-Channel from an Control-Identifier
+// ---------------------------------------------------------------------------------------------------------------------
+function getChannelFromControlIdentifier (controlIdentifier)
+	{
+	return (parseInt (controlIdentifier/128));
+	}
+
+
+
+// ---------------------------------------------------------------------------------------------------------------------
+// - getCCFromControlIdentifier
+// - Get the MIDI-CC from an Control-Identifier
+// ---------------------------------------------------------------------------------------------------------------------
+function getCCFromControlIdentifier (controlIdentifier)
+	{
+	return (controlIdentifier - (getChannelFromControlIdentifier (controlIdentifier) * 128));
 	}
