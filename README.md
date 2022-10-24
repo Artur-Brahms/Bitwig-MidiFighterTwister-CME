@@ -60,12 +60,14 @@ Control Surface Script for Bitwig Studio - Developed by Artur Brahms
 - 0.5.5 / 30.Oct.2020 => Release
 	- changes to support Bitwig v3.3
 ###
-
+- 0.6.0 / 24.Oct.2022 => Release
+	- support for secondary (shift) encoder values (Shift Encoder Hold/Shift Encoder Toggle)
+###
 
 
 ## Licensing
 
-Copyright (c) 2019-2020 by Artur Brahms
+Copyright (c) 2019-2022 by Artur Brahms
  
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
